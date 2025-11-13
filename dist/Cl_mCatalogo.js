@@ -16,6 +16,7 @@ export default class Cl_mCatalogo {
             return;
         }
         this.productos.push(producto);
+        localStorage.setItem("catalogo", JSON.stringify(this.listar()));
         callback(false);
     }
     listar() {

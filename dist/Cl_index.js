@@ -9,10 +9,23 @@ El id del producto a agregar no debe existir previamente en el arreglo interno (
  */
 import Cl_controlador from "./Cl_controlador.js";
 import Cl_mCatalogo from "./Cl_mCatalogo.js";
+import Cl_mProducto from "./Cl_mProducto.js";
 import Cl_vCatalogo from "./Cl_vCatalogo.js";
 export default class Cl_index {
     constructor() {
         this.modelo = new Cl_mCatalogo();
+        let productoLS = localStorage.getItem("catalogo");
+        if (productoLS) {
+            let productoDT = JSON.parse(productoLS);
+            productoDT.forEach((producto) => {
+                this.modelo.agregarProducto({
+                    producto: new Cl_mProducto(producto.id, producto.descripcion, producto.precioUnitario),
+                    callback: (error) => {
+                        // Ignorar errores al cargar desde localStorage
+                    },
+                });
+            });
+        }
         this.vista = new Cl_vCatalogo();
         let controlador = new Cl_controlador(this.modelo, this.vista);
         this.vista.controlador = controlador;

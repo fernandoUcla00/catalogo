@@ -23,9 +23,11 @@ import Cl_mProducto, { IProducto } from "./Cl_mProducto.js";
       return;
     }
     this.productos.push(producto);
+    localStorage.setItem("catalogo", JSON.stringify(this.listar()));
     callback(false);
   }
     listar(): IProducto[] {
-    return this.productos.map((p) => p.toJSON());
+     return this.productos.map((p) => p.toJSON());
+     
     }
  }
